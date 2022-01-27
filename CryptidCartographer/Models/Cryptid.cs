@@ -22,5 +22,7 @@ namespace CryptidCartographer.Models
         public int StateId { get; set; }
         public State State { get; set; }
 
+        public List<Classification> Classifications { get; internal set; }
+
     }
 }
