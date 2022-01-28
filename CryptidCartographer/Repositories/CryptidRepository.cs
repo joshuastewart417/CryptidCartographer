@@ -9,11 +9,44 @@ using CryptidCartographer.Utils;
 
 namespace CryptidCartographer.Repositories
 {
-    public class CryptidRepository : BaseRepository
+    public class CryptidRepository : BaseRepository, ICryptidRepository
     {
         public CryptidRepository(IConfiguration configuration) : base(configuration) { }
 
-        public Cryptid GetCryptidSightingById(int id)
+        public List<Cryptid> GetAll()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                 SELECT c.Id, c.Name, c.Description, c.ImageUrl, c.DateCreated, c.UserId, c.StateId,
+                    u.[Name] as UserName, u.Email, u.[ImageUrl] as UserImage, s.[Name] as StateName,
+                    cl.[Name] AS ClassName,
+                    cl.Id AS ClassId
+                 FROM Cryptid c
+                 JOIN [User] u ON c.UserId = u.Id
+                 JOIN State s ON c.StateId = s.Id
+                 LEFT JOIN CryptidClassification cc ON cc.CryptidId = c.id
+                 LEFT JOIN Classification cl on cl.Id = cc.ClassificationId
+                 ORDER BY Name ASC";
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        var cryptids = new List<Cryptid>();
+                        while (reader.Read())
+                        {
+                            cryptids.Add(newCryptid(reader));
+                        }
+
+                        return cryptids;
+                    }
+                }
+            }
+        }
+
+        public Cryptid GetCryptidById(int id)
         {
             using (var conn = Connection)
             {
@@ -23,12 +56,12 @@ namespace CryptidCartographer.Repositories
                     cmd.CommandText = @$"
                         SELECT c.Id, c.Name, c.Description, c.ImageUrl, c.DateCreated, 
                             c.UserId, c.StateId,
-                            u.Name, u.Email, u.ImageUrl as UserImage,
+                            u.[Name] AS UserName, u.Email, u.[ImageUrl] as UserImage,
                             s.[Name] AS StateName,
                             cl.[Name] AS ClassName,
                             cl.Id AS ClassId
                         FROM Cryptid c
-                            LEFT JOIN User u ON c.UserId = u.id
+                            LEFT JOIN [User] u ON c.UserId = u.id
                             LEFT JOIN State s ON c.StateId = s.id
                             LEFT JOIN CryptidClassification cc ON cc.CryptidId = c.id
                             LEFT JOIN Classification cl on cl.Id = cc.ClassificationId
@@ -38,12 +71,12 @@ namespace CryptidCartographer.Repositories
                     var reader = cmd.ExecuteReader();
 
                     Cryptid cryptid = null;
-                    
+
                     while (reader.Read())
                     {
                         if (cryptid == null)
                         {
-                            cryptid = NewCryptidFromReader(reader);
+                            cryptid = newCryptid(reader);
                         }
 
                         if (DbUtils.IsNotDbNull(reader, "ClassName"))
@@ -60,51 +93,39 @@ namespace CryptidCartographer.Repositories
 
                     reader.Close();
 
-                    return cryptid;                 
+                    return cryptid;
                 }
             }
         }
 
-        private Cryptid NewCryptidFromReader(SqlDataReader reader)
+        private Cryptid newCryptid(SqlDataReader reader)
         {
-            return new Cryptid()
+            var cryptid = new Cryptid()
             {
+                Id = DbUtils.GetInt(reader, "Id"),
+                Name = DbUtils.GetString(reader, "Name"),
+                Description = DbUtils.GetString(reader, "Description"),
+                ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                UserId = DbUtils.GetInt(reader, "UserId"),
+                User = new User()
+                {
+                    Id = DbUtils.GetInt(reader, "UserId"),
+                    Name = DbUtils.GetString(reader, "UserName"),
+                    Email = DbUtils.GetString(reader, "Email"),
+                    ImageUrl = DbUtils.GetString(reader, "UserImage"),
 
-
-
-        //TODO: COMPLETE THIS PRIVATE METHOD FOR NEW CRYPTID OBJECT!!!
-
-                //Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                //Title = reader.GetString(reader.GetOrdinal("Title")),
-                //Content = reader.GetString(reader.GetOrdinal("Content")),
-                //ImageLocation = DbUtils.GetNullableString(reader, "HeaderImage"),
-                //CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
-                //PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
-                //CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
-                //Category = new Category()
-                //{
-                //    Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
-                //    Name = reader.GetString(reader.GetOrdinal("CategoryName"))
-                //},
-                //UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
-                //UserProfile = new UserProfile()
-                //{
-                //    Id = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
-                //    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                //    LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                //    DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
-                //    Email = reader.GetString(reader.GetOrdinal("Email")),
-                //    CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
-                //    ImageLocation = DbUtils.GetNullableString(reader, "AvatarImage"),
-                //    UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
-                //    UserType = new UserType()
-                //    {
-                //        Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
-                //        Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
-                //    }
-                //},
-                //Tags = new List<Tag>()
+                },
+                StateId = DbUtils.GetInt(reader, "StateId"),
+                State = new State()
+                {
+                    Id = DbUtils.GetInt(reader, "StateId"),
+                    Name = DbUtils.GetString(reader, "StateName")
+                },
+                Classifications = new List<Classification>()
             };
+
+            return cryptid;
         }
     }
 }
