@@ -240,7 +240,127 @@ namespace CryptidCartographer.Repositories
             }
         }
 
+        public void Update(Cryptid cryptid)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
 
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+
+                    cmd.CommandText = @"
+                        UPDATE Cryptid
+                            SET Name = @Name,
+                                Description = @Description,
+                                ImageUrl = @ImageUrl,
+                                DateCreated = @DateCreated,
+                                UserId = @UserId,
+                                StateId = @StateId
+                        WHERE id = @id";
+
+                    cmd.Parameters.AddWithValue("@Name", cryptid.Name);
+                    cmd.Parameters.AddWithValue("@Description", cryptid.Description);
+                    if (cryptid.ImageUrl != null)
+                    {
+                        cmd.Parameters.AddWithValue("@ImageUrl", cryptid.ImageUrl);
+                    } 
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@ImageUrl", DBNull.Value);
+                    }
+
+                    cmd.Parameters.AddWithValue("@DateCreated", cryptid.DateCreated);
+                    cmd.Parameters.AddWithValue("@UserId", cryptid.UserId);
+                    cmd.Parameters.AddWithValue("@StateId", cryptid.StateId);
+                    cmd.Parameters.AddWithValue("@id", cryptid.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+        public void Delete(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using(SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        DELETE FROM Cryptid WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public bool IsCryptidTrackedByUser(int currentUserId, int cryptidId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT * FROM Track
+                        WHERE UserId = @currentUserId AND CryptidId = @cryptidId";
+
+                    cmd.Parameters.AddWithValue("@currentUserId", currentUserId);
+                    cmd.Parameters.AddWithValue("@cryptidId", cryptidId);
+
+                    cmd.ExecuteNonQuery();
+
+                    var reader = cmd.ExecuteReader();
+
+                    return reader.Read();
+                }
+            }
+        }
+
+        public List<Cryptid> GetAllUserTrackedCryptids(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT c.Id, c.Name, c.Description, c.ImageUrl, c.DateCreated,
+                               c.UserId, c.StateId, 
+                               u.[Name] as UserName, u.Email, u.[ImageUrl] as UserImage,
+                               s.[Name] as StateName,
+                               cl.[Name] as ClassName
+                        FROM Cryptid c
+                               LEFT JOIN Track t on t.CryptidId = c.id
+                               LEFT JOIN [User] u ON t.UserId = u.id
+                               LEFT JOIN CryptidClassification cc ON cc.CryptidId = c.id
+                               LEFT JOIN Classification cl on cl.Id = cc.ClassificationId
+                               LEFT JOIN State s ON c.StateId = s.id
+                        WHERE DateCreated < SYSDATETIME() AND t.UserId = @id";
+
+                    cmd.Parameters.AddWithValue("@id", userId);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var cryptids = new List<Cryptid>();
+
+                    while (reader.Read())
+                    {
+                        cryptids.Add(newCryptid(reader));
+                    }
+
+                    reader.Close();
+
+                    return cryptids;
+                }
+            }
+        }
 
 
         private Cryptid newCryptid(SqlDataReader reader)
@@ -272,5 +392,6 @@ namespace CryptidCartographer.Repositories
 
             return cryptid;
         }
+
     }
 }
