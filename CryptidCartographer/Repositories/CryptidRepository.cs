@@ -46,6 +46,123 @@ namespace CryptidCartographer.Repositories
             }
         }
 
+        public List<Cryptid> GetCryptidByStateId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+
+                    cmd.CommandText = @"
+                    SELECT c.Id, c.Name, c.Description, c.ImageUrl, 
+                        c.DateCreated, c.UserId, c.StateId,
+                        u.[Name] as UserName, u.Email, u.[ImageUrl] as UserImage,
+                        s.[Name] as StateName
+                    FROM Cryptid c 
+                        LEFT JOIN [User] u ON c.UserId = u.id
+                        LEFT JOIN State s ON c.StateId = s.id
+                        LEFT JOIN CryptidClassification cc ON cc.CryptidId = c.id
+                        LEFT JOIN Classification cl on cl.Id = cc.ClassificationId
+                    WHERE c.DateCreated < SYSDATETIME() AND cl.Id = 1
+                    ORDER BY DateCreated DESC";
+
+                    var cryptids = new List<Cryptid>();
+
+                    cmd.Parameters.AddWithValue("@stateId", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        cryptids.Add(newCryptid(reader));
+                    }
+
+                    reader.Close();
+
+                    return cryptids;
+                }
+            }
+        }
+
+        public List<Cryptid> GetCryptidByClassification(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT c.Id, c.Name, c.Description, c.ImageUrl, 
+                        c.DateCreated, c.UserId, c.StateId,
+                        u.[Name] as UserName, u.Email, u.[ImageUrl] as UserImage,
+                        s.[Name] as StateName,
+                        cl.[Name]
+                    FROM Cryptid c 
+                        LEFT JOIN [User] u ON c.UserId = u.id
+                        LEFT JOIN State s ON c.StateId = s.id
+                        LEFT JOIN CryptidClassification cc ON cc.CryptidId = c.id
+                        LEFT JOIN Classification cl on cl.Id = cc.ClassificationId
+                    WHERE c.DateCreated < SYSDATETIME() AND cl.Id = @classId
+                    ORDER BY DateCreated DESC";
+
+                    var cryptids = new List<Cryptid>();
+
+                    cmd.Parameters.AddWithValue("@classId", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        cryptids.Add(newCryptid(reader));
+                    }
+
+                    reader.Close();
+
+                    return cryptids;
+                }
+            }
+        }
+
+        public List<Cryptid> GetCryptidSightingByUserId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT c.Id, c.Name, c.Description, c.ImageUrl, c.DateCreated,
+                               c.UserId, c.StateId,
+                               u.[Name] as UserName, u.Email, u.[ImageUrl] as UserImage,
+                               s.[Name] as StateName
+                        FROM Cryptid c
+                               LEFT JOIN [User] u on c.UserId = u.id
+                               LEFT JOIN State s on c.StateId = s.id
+                        WHERE DateCreated < SYSDATETIME() AND UserId = @id";
+
+                    var cryptids = new List<Cryptid>();
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Cryptid cryptid = null;
+
+                    while (reader.Read())
+                    {
+                        cryptids.Add(newCryptid(reader));
+                    }
+
+                    reader.Close();
+
+                    return cryptids;
+                }
+            }
+        }
+
         public Cryptid GetCryptidById(int id)
         {
             using (var conn = Connection)
@@ -97,6 +214,34 @@ namespace CryptidCartographer.Repositories
                 }
             }
         }
+
+        public void Add(Cryptid cryptid)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Cryptid (
+                            Name, Description, ImageUrl, DateCreated, UserId, StateId)
+                        OUTPUT INSERTED.ID
+                        VALUES (
+                            @Name, @Description, @ImageUrl, @DateCreated, @UserId, @StateId)";
+
+                    cmd.Parameters.AddWithValue("@Name", cryptid.Name);
+                    cmd.Parameters.AddWithValue("@Description", cryptid.Description);
+                    cmd.Parameters.AddWithValue("@ImageUrl", cryptid.ImageUrl);
+                    cmd.Parameters.AddWithValue("@DateCreated", cryptid.DateCreated);
+                    cmd.Parameters.AddWithValue("@UserId", cryptid.UserId);
+                    cmd.Parameters.AddWithValue("@StateId", cryptid.StateId);
+                    cryptid.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+
+
 
         private Cryptid newCryptid(SqlDataReader reader)
         {
