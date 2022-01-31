@@ -44,6 +44,24 @@ namespace CryptidCartographer.Controllers
             return NoContent();
         }
 
+        [HttpPut]
+        public IActionResult Put(int id, Cryptid cryptid)
+        {
+            if (id != cryptid.Id)
+            {
+                return BadRequest();
+            }
+
+            _cryptidRepo.Update(cryptid);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _cryptidRepo.Delete(id);
+        }
+
         [HttpGet("GetCryptidByStateId/{id}")]
         public IActionResult GetCryptidByStateId(int id)
         {
@@ -64,5 +82,12 @@ namespace CryptidCartographer.Controllers
             var cryptids = _cryptidRepo.GetCryptidByClassification(id);
             return Ok(cryptids);
         }
+
+        [HttpGet("GetAllUserTrackedCryptids/{id}")]
+        public IActionResult GetTrackedCryptids(int id)
+        {
+            var cryptids = _cryptidRepo.GetAllUserTrackedCryptids(id);
+            return Ok(cryptids);
+        {
     }
 }

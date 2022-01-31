@@ -18,6 +18,13 @@
 .env.test.local
 .env.production.local
 
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*appsettings.Local.json
+*appsettings.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
