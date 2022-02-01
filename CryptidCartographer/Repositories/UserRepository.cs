@@ -64,7 +64,7 @@ namespace CryptidCartographer.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT u.Id, u.Name, u.Email, u.ImageUrl, u.FirebaseUserId
-                        FROM User u
+                        FROM [User] u
                         WHERE FirebaseUserId = @FirebaseUserId";
 
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);

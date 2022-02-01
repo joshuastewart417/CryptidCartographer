@@ -54,7 +54,7 @@ const Cryptid = ({ cryptid }) => {
           <Button onClick={handleDelete}>Delete</Button>
           <div>
             <label>
-                <Checkbox id="track" name="track"
+                <input type="checkbox" id="track" name="track"
                     checked={isChecked}
                     onChange={handleIsChecked}
                 />
