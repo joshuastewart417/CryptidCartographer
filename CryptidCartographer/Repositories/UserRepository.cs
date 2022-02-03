@@ -22,7 +22,7 @@ namespace CryptidCartographer.Repositories
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = @"
-                      Select * from User";
+                      Select * from [User]";
 
 
                         var users = new List<User>();
@@ -99,7 +99,7 @@ namespace CryptidCartographer.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT u.Id, u.Name, u.Email, u.ImageUrl, u.FirebaseUserId
-                        FROM User u
+                        FROM [User] u
                         WHERE u.id = @id";
 
                     DbUtils.AddParameter(cmd, "@id", id);
@@ -133,7 +133,7 @@ namespace CryptidCartographer.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO User (Name, Email, ImageUrl, FirebaseUserId)
+                    cmd.CommandText = @"INSERT INTO [User] (Name, Email, ImageUrl, FirebaseUserId)
                                         OUTPUT INSERTED.ID
                                         VALUES (@Name, @Email, @ImageUrl, @FirebaseUserId)";
                     DbUtils.AddParameter(cmd, "@Name", user.Name);

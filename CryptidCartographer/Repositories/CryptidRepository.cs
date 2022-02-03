@@ -149,8 +149,6 @@ namespace CryptidCartographer.Repositories
 
                     var reader = cmd.ExecuteReader();
 
-                    Cryptid cryptid = null;
-
                     while (reader.Read())
                     {
                         cryptids.Add(newCryptid(reader));
@@ -203,8 +201,6 @@ namespace CryptidCartographer.Repositories
                                 Name = DbUtils.GetString(reader, "ClassName"),
                                 Id = DbUtils.GetInt(reader, "ClassId")
                             };
-
-                            cryptid.Classifications.Add(classification);
                         }
                     }
 
@@ -236,6 +232,8 @@ namespace CryptidCartographer.Repositories
                     cmd.Parameters.AddWithValue("@UserId", cryptid.UserId);
                     cmd.Parameters.AddWithValue("@StateId", cryptid.StateId);
                     cryptid.Id = (int)cmd.ExecuteScalar();
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
