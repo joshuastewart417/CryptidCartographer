@@ -5,7 +5,6 @@ namespace CryptidCartographer.Repositories
 {
     public interface IClassificationRepository
     {
-        void Add(Classification classification);
         void CreateClassification(Classification classification);
         void Delete(int id);
         List<Classification> GetAllClassifications();

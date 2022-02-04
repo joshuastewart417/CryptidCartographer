@@ -37,7 +37,7 @@ namespace CryptidCartographer.Controllers
         {
             cryptid.DateCreated = DateTime.Now;
             _cryptidRepo.Add(cryptid);
-            return NoContent();
+            return CreatedAtAction("Get", new { id = cryptid.Id }, cryptid);
         }
 
         [HttpPut]

@@ -34,7 +34,7 @@ const Cryptid = ({ cryptid }) => {
       <Card className="cryptid">
         <CardImg
           top
-          width="100%"
+          width="25%"
           src={cryptid.imageUrl}
           alt="cryptid_image"
         />

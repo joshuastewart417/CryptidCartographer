@@ -96,29 +96,6 @@ namespace CryptidCartographer.Repositories
             }
         }
 
-        public void Add(Classification classification)
-        {
-
-            using (var conn = Connection)
-            {
-                conn.Open();
-
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                                      INSERT INTO Classification (Name) 
-                                      OUTPUT INSERTED.ID
-                                      VALUES (@Name)";
-
-                    cmd.Parameters.AddWithValue("@Name", classification.Name);
-
-                    int id = (int)cmd.ExecuteScalar();
-
-                    classification.Id = id;
-                }
-            }
-        }
-
         public void Update(Classification classification)
         {
             using (var conn = Connection)

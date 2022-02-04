@@ -1,4 +1,4 @@
-const baseUrl = "api/cryptid";
+const baseUrl = "/api/cryptid";
 
 export const getAllCryptids = () => {
     return fetch(baseUrl).then((res) => res.json());
