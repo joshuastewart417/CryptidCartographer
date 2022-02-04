@@ -4,6 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import CryptidMap from "./cryptid/CryptidMap";
 import CryptidList from "./cryptid/StateCryptidList";
+import StateCryptidList from "./cryptid/StateCryptidList";
 
 
 
@@ -13,9 +14,13 @@ export default function ApplicationViews({ isLoggedIn }) {
     <main>
       <Switch>
         <Route path="/" exact>
-          {isLoggedIn ? <CryptidList /> : <Redirect to="/login" />}
+          {isLoggedIn ? <CryptidMap /> : <Redirect to="/login" />}
         </Route>
-        
+
+        <Route path="/stateCryptidList/:stateName" exact>
+          {isLoggedIn ? <StateCryptidList useparams/> : <Redirect to="/login" />}
+        </Route>
+
         <Route path="/login">
           <Login />
         </Route>

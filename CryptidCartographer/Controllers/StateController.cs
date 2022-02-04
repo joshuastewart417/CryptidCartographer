@@ -27,5 +27,14 @@ namespace CryptidCartographer.Controllers
             var state = _stateRepo.GetStateById(id);
             return Ok(state);
         }
+
+        [HttpGet("GetStateIdByName/{name}")]
+        public IActionResult GetStateIdByName(string name)
+        {
+
+            var stateId = _stateRepo.GetStateIdByName(name);
+            return Ok(stateId);
+        }
+
     }
 }

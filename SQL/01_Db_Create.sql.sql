@@ -29,6 +29,7 @@ CREATE TABLE [Comment] (
   [Message] nvarchar(255) NOT NULL,
   [UserId] int NOT NULL,
   [CryptidId] int NOT NULL
+  [DateCreated] DATETIME NULL,
 )
 GO
 

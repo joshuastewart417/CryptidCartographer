@@ -47,7 +47,7 @@ namespace CryptidCartographer.Repositories
             }
         }
 
-        public List<Cryptid> GetCryptidByStateId(int id)
+        public List<Cryptid> GetCryptidByStateName(string name)
         {
             using (var conn = Connection)
             {
@@ -66,12 +66,12 @@ namespace CryptidCartographer.Repositories
                         LEFT JOIN State s ON c.StateId = s.id
                         LEFT JOIN CryptidClassification cc ON cc.CryptidId = c.id
                         LEFT JOIN Classification cl on cl.Id = cc.ClassificationId
-                    WHERE c.DateCreated < SYSDATETIME() AND s.id = @stateId
+                    WHERE c.DateCreated < SYSDATETIME() AND s.[Name] = @stateName
                     ORDER BY DateCreated DESC";
 
                     var cryptids = new List<Cryptid>();
 
-                    cmd.Parameters.AddWithValue("@stateId", id);
+                    cmd.Parameters.AddWithValue("@stateName", name);
 
                     var reader = cmd.ExecuteReader();
 

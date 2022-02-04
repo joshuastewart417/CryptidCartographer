@@ -58,10 +58,10 @@ namespace CryptidCartographer.Controllers
             _cryptidRepo.Delete(id);
         }
 
-        [HttpGet("GetCryptidByStateId/{id}")]
-        public IActionResult GetCryptidByStateId(int id)
+        [HttpGet("GetCryptidByStateName/{name}")]
+        public IActionResult GetCryptidByStateName(string name)
         {
-            var cryptids = _cryptidRepo.GetCryptidByStateId(id);
+            var cryptids = _cryptidRepo.GetCryptidByStateName(name);
             return Ok(cryptids);
         }
 
