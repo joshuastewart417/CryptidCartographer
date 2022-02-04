@@ -1,4 +1,4 @@
-﻿SET IDENTITY_INSERT [State] ON
+SET IDENTITY_INSERT [State] ON
 INSERT INTO [State]
     ([Id], [Name])
 VALUES
@@ -80,10 +80,10 @@ SET IDENTITY_INSERT [Comment] ON
 INSERT INTO [Comment]
     ([Id], [Message], [UserId], [CryptidId])
 VALUES
-    (1, 'I think I saw this same thing when I was camping last weekend!', 1, 1),
-    (2, 'What even is this thing?!', 3, 3),
-    (3, 'This is terrifying!', 2, 2),
-    (4, 'I can feel the bad vibes coming off this thing', 4, 1);
+    (1, 'I think I saw this same thing when I was camping last weekend!', 2022-02-02 15:26:35, 1, 1),
+    (2, 'What even is this thing?!', 2022-02-01 09:14:28, 3, 3),
+    (3, 'This is terrifying!', 2022-01-31 16:30:28, 2, 2),
+    (4, 'I can feel the bad vibes coming off this thing',	2022-01-31 15:14:28, 4, 1);
 SET IDENTITY_INSERT [Comment] OFF
 
 SET IDENTITY_INSERT [Classification] ON

@@ -42,8 +42,8 @@ export const getCryptidById = (cryptidId) => {
     }).then((res) => res.json());
 };
 
-export const getCryptidByStateId = (stateId) => {
-    return fetch(baseUrl + `/GetCryptidByStateId/${stateId}`, {
+export const getCryptidByStateName = (stateName) => {
+    return fetch(baseUrl + `/GetCryptidByStateName/${stateName}`, {
         method: "GET",
         headers: {
             "Content-type": "application/json"

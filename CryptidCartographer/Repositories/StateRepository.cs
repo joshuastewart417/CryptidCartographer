@@ -83,5 +83,39 @@ namespace CryptidCartographer.Repositories
             }
         }
 
+        public State GetStateIdByName(string stateName)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                      SELECT Id, Name
+                                      FROM State
+                                      WHERE Name = @Name";
+
+                    cmd.Parameters.AddWithValue("@Name", stateName);
+
+                    State state = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                            state = new State()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                            };
+
+                    reader.Close();
+                    }
+
+                    return state;
+                }
+            }
+        }
+
     }
 }

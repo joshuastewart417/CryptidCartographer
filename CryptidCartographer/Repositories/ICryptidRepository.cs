@@ -11,7 +11,7 @@ namespace CryptidCartographer.Repositories
         bool IsCryptidTrackedByUser(int currentUserId, int cryptidId);
         List<Cryptid> GetAll();
         List<Cryptid> GetAllUserTrackedCryptids(int userId);
-        List<Cryptid> GetCryptidByStateId(int id);
+        List<Cryptid> GetCryptidByStateName(string name);
         List<Cryptid> GetCryptidByClassification(int id);
         List<Cryptid> GetCryptidSightingByUserId(int id);
         Cryptid GetCryptidById(int id);
