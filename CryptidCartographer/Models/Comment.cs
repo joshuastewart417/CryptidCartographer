@@ -9,6 +9,7 @@ namespace CryptidCartographer.Models
     {
         public int Id { get; set; }
         public string Message { get; set; }
+        public DateTime DateCreated { get; set; }
 
         
         public int UserId { get; set; }

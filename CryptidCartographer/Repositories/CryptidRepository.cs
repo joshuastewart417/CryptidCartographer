@@ -11,13 +11,14 @@ namespace CryptidCartographer.Repositories
 {
     public class CryptidRepository : BaseRepository, ICryptidRepository
     {
-        public CryptidRepository(IConfiguration configuration) : base(configuration) { }
+        public CryptidRepository(IConfiguration config) : base(config) { }
 
         public List<Cryptid> GetAll()
         {
             using (var conn = Connection)
             {
                 conn.Open();
+
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
@@ -65,7 +66,7 @@ namespace CryptidCartographer.Repositories
                         LEFT JOIN State s ON c.StateId = s.id
                         LEFT JOIN CryptidClassification cc ON cc.CryptidId = c.id
                         LEFT JOIN Classification cl on cl.Id = cc.ClassificationId
-                    WHERE c.DateCreated < SYSDATETIME() AND cl.Id = 1
+                    WHERE c.DateCreated < SYSDATETIME() AND s.id = @stateId
                     ORDER BY DateCreated DESC";
 
                     var cryptids = new List<Cryptid>();
@@ -233,7 +234,7 @@ namespace CryptidCartographer.Repositories
                     cmd.Parameters.AddWithValue("@StateId", cryptid.StateId);
                     cryptid.Id = (int)cmd.ExecuteScalar();
 
-                    cmd.ExecuteNonQuery();
+  
                 }
             }
         }
@@ -330,10 +331,11 @@ namespace CryptidCartographer.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT c.Id, c.Name, c.Description, c.ImageUrl, c.DateCreated,
-                               c.UserId, c.StateId, 
+                               c.UserId as CryptidUserId, c.StateId, 
                                u.[Name] as UserName, u.Email, u.[ImageUrl] as UserImage,
                                s.[Name] as StateName,
-                               cl.[Name] as ClassName
+                               cl.[Name] as ClassName,
+                               t.UserId
                         FROM Cryptid c
                                LEFT JOIN Track t on t.CryptidId = c.id
                                LEFT JOIN [User] u ON t.UserId = u.id

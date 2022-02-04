@@ -13,16 +13,16 @@ namespace CryptidCartographer.Controllers
     {
         private readonly ICryptidRepository _cryptidRepo;
         private readonly ICryptidClassificationRepository _cryptidClassRepo;
-        //private readonly IClassificationRepository _classRepo;
-        //private readonly ICommentRepository _commentRepo;
+        private readonly IClassificationRepository _classRepo;
+        private readonly ICommentRepository _commentRepo;
         private readonly IUserRepository _userRepo;
 
-        public CryptidClassificationController(ICryptidRepository cryptidRepo, ICryptidClassificationRepository cryptidClassRepo/* IClassificationRepository classRepo, ICommentRepository commentRepo*/, IUserRepository userRepo)
+        public CryptidClassificationController(ICryptidRepository cryptidRepo, ICryptidClassificationRepository cryptidClassRepo, IClassificationRepository classRepo, ICommentRepository commentRepo, IUserRepository userRepo)
         {
             _cryptidRepo = cryptidRepo;
             _cryptidClassRepo = cryptidClassRepo;
-            //_classRepo = classRepo;
-            //_commentRepo = commentRepo;
+            _classRepo = classRepo;
+            _commentRepo = commentRepo;
             _userRepo = userRepo;
         }
 
