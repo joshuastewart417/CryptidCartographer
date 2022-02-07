@@ -1,21 +1,21 @@
-const baseUrl = "/api/cryptid";
+const cryptidUrl = "/api/cryptid";
 
 export const getAllCryptids = () => {
-    return fetch(baseUrl).then((res) => res.json());
+    return fetch(cryptidUrl).then((res) => res.json());
 };
 
 export const addCryptid = (cryptid) => {
-    return fetch(baseUrl, {
+    return fetch(cryptidUrl, {
         method:"POST",
         headers: {
-            "Content-type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(cryptid)
     });
 }
 
 export const deleteCryptid = (cryptid) => {
-    return fetch(baseUrl + `/${cryptid.id}`, {
+    return fetch(cryptidUrl + `/${cryptid.id}`, {
         method: "DELETE",
         headers: {
             "Content-type": "application/json"
@@ -24,7 +24,7 @@ export const deleteCryptid = (cryptid) => {
 };
 
 export const updateCryptid = (cryptid) => {
-    return fetch(baseUrl + `/${cryptid.id}`, {
+    return fetch(cryptidUrl + `/${cryptid.id}`, {
         method: "PUT",
         headers: {
             "Content-type": "application/json"
@@ -34,7 +34,7 @@ export const updateCryptid = (cryptid) => {
 }
 
 export const getCryptidById = (cryptidId) => {
-    return fetch(baseUrl + `/${cryptidId}`, {
+    return fetch(cryptidUrl + `/${cryptidId}`, {
         method: "GET",
         headers: {
             "Content-type": "application/json"
@@ -43,7 +43,7 @@ export const getCryptidById = (cryptidId) => {
 };
 
 export const getCryptidByStateName = (stateName) => {
-    return fetch(baseUrl + `/GetCryptidByStateName/${stateName}`, {
+    return fetch(cryptidUrl + `/GetCryptidByStateName/${stateName}`, {
         method: "GET",
         headers: {
             "Content-type": "application/json"
@@ -52,7 +52,7 @@ export const getCryptidByStateName = (stateName) => {
 };
 
 export const getCryptidByClassification = (classId) => {
-    return fetch(baseUrl + `/GetCryptidByClassification/${classId}`, {
+    return fetch(cryptidUrl + `/GetCryptidByClassification/${classId}`, {
         method: "GET",
         headers: {
             "Content-type": "application/json"
@@ -61,7 +61,7 @@ export const getCryptidByClassification = (classId) => {
 };
 
 export const getCryptidSightingByUserId = (userId) => {
-    return fetch(baseUrl + `/GetCryptidSightingByUserId/${userId}`, {
+    return fetch(cryptidUrl + `/GetCryptidSightingByUserId/${userId}`, {
         method: "GET",
         headers: {
             "Content-type": "application/json"
@@ -70,7 +70,7 @@ export const getCryptidSightingByUserId = (userId) => {
 };
 
 export const getAllUserTrackedCryptids = (trackId) => {
-    return fetch(baseUrl + `/GetAllUserTrackedCryptids/${trackId}`, {
+    return fetch(cryptidUrl + `/GetAllUserTrackedCryptids/${trackId}`, {
         method: "GET",
         headers: {
             "Content-type": "application/json"

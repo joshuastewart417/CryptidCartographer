@@ -92,7 +92,7 @@ namespace CryptidCartographer.Repositories
             }
         }
 
-        public void Add(CryptidClassification cryptidClass)
+        public void AddClassToCryptid(CryptidClassification cryptidClass)
         {
             using (var conn = Connection)
             {

@@ -43,7 +43,7 @@ namespace CryptidCartographer.Controllers
         [HttpPost]
         public IActionResult Post(CryptidClassification cryptidClass)
         {
-            _cryptidClassRepo.Add(cryptidClass);
+            _cryptidClassRepo.AddClassToCryptid(cryptidClass);
             return NoContent();
         }
 

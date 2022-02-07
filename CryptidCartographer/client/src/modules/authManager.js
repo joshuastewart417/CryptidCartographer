@@ -1,9 +1,15 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import { getUserByFireBaseUserId } from "./userManager";
 
 const _apiUrl = "/api/user";
 
 const _doesUserExist = (firebaseUserId) => {
+
+  getUserByFireBaseUserId(firebaseUserId).then(user => {
+    localStorage.setItem("LoggedInUserId", user.id);
+  })
+
   return getToken().then((token) =>
     fetch(`${_apiUrl}/DoesUserExist/${firebaseUserId}`, {
       method: "GET",

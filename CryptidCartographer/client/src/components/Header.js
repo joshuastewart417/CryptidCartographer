@@ -46,7 +46,7 @@ export default function Header({ isLoggedIn, isAdmin }) {
 
                                 {isLoggedIn ? <NavItem>
                                     <NavLink tag={RRNavLink} to="/trackingList">
-                                        Manage Categories
+                                        Tracking List
                                     </NavLink>
                                 </NavItem> : null}
                             </>

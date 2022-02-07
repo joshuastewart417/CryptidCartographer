@@ -19,8 +19,14 @@ namespace CryptidCartographer.Controllers
             _userRepo = userRepo;
         }
 
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return Ok(_userRepo.GetAllUsers());
+        }
+
         [HttpGet("{firebaseUserId}")]
-        public IActionResult GetUser(string firebaseUserId)
+        public IActionResult GetUserByFirebase(string firebaseUserId)
         {
             return Ok(_userRepo.GetByFirebaseUserId(firebaseUserId));
         }
@@ -36,10 +42,12 @@ namespace CryptidCartographer.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
+
+        [HttpGet("GetUserById/{id}")]
+        public IActionResult GetUserById(int id)
         {
-            return Ok(_userRepo.GetAllUsers());
+            var user = _userRepo.GetUserById(id);
+            return Ok(user);
         }
 
         [HttpPost]
@@ -47,7 +55,7 @@ namespace CryptidCartographer.Controllers
         {
             _userRepo.Add(user);
             return CreatedAtAction(
-                nameof(GetUser),
+                nameof(GetUserByFirebase),
                 new { firebaseUserId = user.FirebaseUserId },
                 user);
         }
