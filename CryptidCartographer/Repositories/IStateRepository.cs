@@ -7,6 +7,6 @@ namespace CryptidCartographer.Repositories
     {
         List<State> GetAllStates();
         State GetStateById(int id);
-        public State GetStateIdByName(string stateName);
+        State GetStateIdByName(string stateName);
     }
 }

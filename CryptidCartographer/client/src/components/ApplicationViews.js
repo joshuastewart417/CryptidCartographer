@@ -3,8 +3,10 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import CryptidMap from "./cryptid/CryptidMap";
-import CryptidList from "./cryptid/StateCryptidList";
+import CryptidDetails from "./cryptid/CryptidDetails";
 import StateCryptidList from "./cryptid/StateCryptidList";
+import MyCryptidList from "./cryptid/MyCryptidList";
+import AddCryptid from "./cryptid/AddCryptid";
 
 
 
@@ -20,6 +22,22 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/stateCryptidList/:stateName" exact>
           {isLoggedIn ? <StateCryptidList useparams/> : <Redirect to="/login" />}
         </Route>
+
+        <Route path="/myCryptidList" exact>
+          {isLoggedIn ? <MyCryptidList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/addCryptid">
+                    <AddCryptid />
+        </Route>
+     
+        <Route path="/cryptid/:id">
+                    {isLoggedIn ? (
+                        <CryptidDetails useparams />
+                    ) : (
+                        <Redirect to="/login" />
+                    )}
+                </Route>
 
         <Route path="/login">
           <Login />

@@ -1,21 +1,13 @@
 import React, {useState} from "react";
-import {
-    Card,
-    CardImg,
-    CardText,
-    CardBody,
-    CardTitle,
-    CardSubtitle,
-    Button
-  } from "reactstrap";
+import { Card, CardBody, CardImg, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+
+let userId = parseInt(localStorage.getItem("LoggedInUserId"))
 
 
 const Cryptid = ({ cryptid }) => {
     const history = useHistory();
-
-    const [isChecked, setIsChecked] = useState(false);
 
     const handleDelete = () => {
         history.push(`/deleteCryptid/${cryptid.id}`);
@@ -25,45 +17,36 @@ const Cryptid = ({ cryptid }) => {
         history.push(`/editCryptid/${cryptid.id}`);
     };
 
-    const handleIsChecked = () => {
-        setIsChecked(!isChecked)
-    }
 
     return (
-        <>
       <Card className="cryptid">
-        <CardImg
-          top
-          width="25%"
-          src={cryptid.imageUrl}
-          alt="cryptid_image"
-        />
-        <CardBody>
-          <CardTitle>{cryptid.name}</CardTitle>
-          <CardSubtitle>Sighting in {cryptid.state.name}</CardSubtitle>
-          <CardText>
-              {cryptid.description}
-          </CardText>
-          <CardSubtitle>
-              Submitted by {cryptid.user.name}
-          </CardSubtitle>
-          <CardSubtitle>
-              {cryptid.datecreated}
-          </CardSubtitle>
-          <Button onClick={handleEdit}>Edit</Button>
-          <Button onClick={handleDelete}>Delete</Button>
-          <div>
-            <label>
-                <input type="checkbox" id="track" name="track"
-                    checked={isChecked}
-                    onChange={handleIsChecked}
-                />
-                <span>Track Cryptid</span>
-            </label>
-          </div> 
-        </CardBody>
-      </Card>
-    </>
+            <Link
+                to={`/cryptid/${cryptid.id}`}
+                style={{ textDecoration: "none", color: "black" }}
+            >
+                <CardBody>
+                  <CardImg src={cryptid?.imageUrl} />
+                    <p>
+                        <strong>{cryptid.name}</strong>
+                    </p>
+                    <p>Seen: {cryptid?.dateCreated?.split("T"[0]).shift()}</p>
+                </CardBody>
+            </Link>
+            {userId == cryptid.userId ? (
+                <Button color="danger" onClick={handleDelete}>
+                    Delete
+                </Button>
+            ) : (
+                <></>
+            )}
+            {userId == cryptid.userId ? (
+                <Button color="primary" onClick={handleEdit}>
+                    Edit
+                </Button>
+            ) : (
+                <></>
+            )}
+        </Card>
     );
 };
 
