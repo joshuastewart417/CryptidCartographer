@@ -8,30 +8,30 @@ export const addCryptid = (cryptid) => {
     return fetch(cryptidUrl, {
         method:"POST",
         headers: {
-            "Content-Type": "application/json",
+            "Content-type": "application/json",
         },
         body: JSON.stringify(cryptid)
     });
-}
+};
 
 export const deleteCryptid = (cryptid) => {
-    return fetch(cryptidUrl + `/${cryptid.id}`, {
+    return fetch(cryptidUrl + `/${cryptid}`, {
         method: "DELETE",
         headers: {
             "Content-type": "application/json"
-        }
+        },
     });
 };
 
 export const updateCryptid = (cryptid) => {
-    return fetch(cryptidUrl + `/${cryptid.id}`, {
+    return fetch(`${cryptidUrl}/${cryptid.id}`, {
         method: "PUT",
         headers: {
             "Content-type": "application/json"
         },
         body: JSON.stringify(cryptid)
-    })
-}
+    });
+};
 
 export const getCryptidById = (cryptidId) => {
     return fetch(cryptidUrl + `/${cryptidId}`, {

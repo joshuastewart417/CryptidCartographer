@@ -23,6 +23,7 @@ export default function Header({ isLoggedIn, isAdmin }) {
         <div>
             <Navbar color="light" light expand="md">
                 <NavbarBrand tag={RRNavLink} to="/">
+                    <img className="CC_Logo" src="/CC_Logo.png" height="100px" width="auto"/>
                     Cryptid Cartographer
                 </NavbarBrand>
                 <NavbarToggler onClick={toggle} />

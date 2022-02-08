@@ -3,18 +3,12 @@ import { Card, CardBody, CardImg, Button } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router";
 import { getCryptidById } from "../../modules/cryptidManager";
-// import { getCommentsByCryptidId } from "../../modules/commentManager";
-// import {
-//     addTrack,
-//     deleteTrack
-// } from "../../modules/trackManager";
-// import { SubscribeButton } from "../Utils/SubscribeButton";
+
 
 let userId = parseInt(localStorage.getItem("LoggedInUserId"))
 
 const CryptidDetails = () => {
     const history = useHistory();
-    const currentUser = localStorage.getItem("LoggedInUserId");
     const [cryptid, setCryptid] = useState([]);
 
 
