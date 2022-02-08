@@ -7,6 +7,8 @@ namespace CryptidCartographer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
+    //TODO: AUTH USAGE
     public class CryptidController : ControllerBase
     {
         private readonly ICryptidRepository _cryptidRepo;
@@ -41,13 +43,8 @@ namespace CryptidCartographer.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put(int id, Cryptid cryptid)
+        public IActionResult Put(Cryptid cryptid)
         {
-            if (id != cryptid.Id)
-            {
-                return BadRequest();
-            }
-
             _cryptidRepo.Update(cryptid);
             return NoContent();
         }
@@ -85,6 +82,12 @@ namespace CryptidCartographer.Controllers
             var cryptids = _cryptidRepo.GetAllUserTrackedCryptids(id);
             return Ok(cryptids);
         }
-    }
 
+        [HttpGet("UserTrackedCryptids")]
+        public IActionResult UserTrackedCryptids(int userId, int cryptidId)
+        {
+            var res = _cryptidRepo.IsCryptidTrackedByUser(userId, cryptidId);
+            return Ok(res);
+        }
+    }
 }

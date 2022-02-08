@@ -1,8 +1,19 @@
+import { getToken } from "./authManager";
+
 const cryptidUrl = "/api/cryptid";
 
+
 export const getAllCryptids = () => {
-    return fetch(cryptidUrl).then((res) => res.json());
-};
+    return getToken()
+      .then(
+        (token) =>
+          fetch(cryptidUrl, {
+            method: "GET",
+            headers: { authorization: `bearer ${token}` },
+          })
+      )
+      .then((res) => res.json());
+  };
 
 export const addCryptid = (cryptid) => {
     return fetch(cryptidUrl, {
@@ -24,7 +35,7 @@ export const deleteCryptid = (cryptid) => {
 };
 
 export const updateCryptid = (cryptid) => {
-    return fetch(`${cryptidUrl}/${cryptid.id}`, {
+    return fetch(cryptidUrl, {
         method: "PUT",
         headers: {
             "Content-type": "application/json"
@@ -76,5 +87,21 @@ export const getAllUserTrackedCryptids = (trackId) => {
             "Content-type": "application/json"
         }
     }).then((res) => res.json());
+};
+
+export const getIsCryptidTrackedByUser = (userId, cryptidId) => {
+    return fetch(
+        `${cryptidUrl}/getIsCryptidTrackedByUser/?UserId=${userId}&CryptidId=${cryptidId}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+    ).then((res) => {
+        if (res.json().length > 0) {
+            return true;
+        } else return false;
+    });
 };
 

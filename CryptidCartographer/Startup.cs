@@ -56,6 +56,9 @@ namespace CryptidCartographer
             services.AddTransient<ICryptidRepository, CryptidRepository>();
             services.AddTransient<IStateRepository, StateRepository>();
             services.AddTransient<ICryptidClassificationRepository, CryptidClassificationRepository>();
+            services.AddTransient<ITrackRepository, TrackRepository>();
+            services.AddTransient<IClassificationRepository, ClassificationRepository>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

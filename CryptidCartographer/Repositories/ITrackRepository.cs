@@ -5,7 +5,7 @@ namespace CryptidCartographer.Repositories
     public interface ITrackRepository
     {
         void Add(Track track);
-        void Delete(int id);
+        void Delete(Track track);
         void Update(Track track);
     }
 }

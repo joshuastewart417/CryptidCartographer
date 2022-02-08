@@ -13,6 +13,7 @@ namespace CryptidCartographer.Controllers
     [ApiController]
     public class TrackController : ControllerBase
     {
+        private const string Track = "{UserId, CryptidId}";
         private readonly ICryptidRepository _cryptidRepo;
         private readonly ICryptidClassificationRepository _cryptidClassRepo;
         private readonly IClassificationRepository _classRepo;
@@ -45,10 +46,10 @@ namespace CryptidCartographer.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete(Track track)
         {
-            _trackRepo.Delete(id);
+            _trackRepo.Delete(track);
             return NoContent();
         }
 
