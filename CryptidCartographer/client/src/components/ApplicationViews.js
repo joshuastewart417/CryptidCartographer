@@ -7,6 +7,9 @@ import CryptidDetails from "./cryptid/CryptidDetails";
 import StateCryptidList from "./cryptid/StateCryptidList";
 import MyCryptidList from "./cryptid/MyCryptidList";
 import AddCryptid from "./cryptid/AddCryptid";
+import DeleteCryptid from "./cryptid/DeleteCryptid";
+import EditCryptid from "./cryptid/EditCryptid";
+import TrackedCryptidList from "./cryptid/TrackedCryptidList";
 
 
 
@@ -27,8 +30,20 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <MyCryptidList /> : <Redirect to="/login" />}
         </Route>
 
+        <Route path="/trackedCryptidList" exact>
+          {isLoggedIn ? <TrackedCryptidList /> : <Redirect to="/login" />}
+        </Route>
+
         <Route path="/addCryptid">
                     <AddCryptid />
+        </Route>
+
+        <Route path="/editCryptid/:id">
+                    <EditCryptid userparams />
+        </Route>
+
+        <Route path="/deleteCryptid/:id">
+                    <DeleteCryptid useparams/>
         </Route>
      
         <Route path="/cryptid/:id">
@@ -37,7 +52,7 @@ export default function ApplicationViews({ isLoggedIn }) {
                     ) : (
                         <Redirect to="/login" />
                     )}
-                </Route>
+        </Route>
 
         <Route path="/login">
           <Login />
@@ -46,6 +61,7 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/register">
           <Register />
         </Route>
+
       </Switch>
     </main>
   );

@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import usa from "@svg-maps/usa";
 import { SVGMap } from "react-svg-map";
 import { getCryptidByStateName } from "../../modules/cryptidManager";
-import "react-svg-map/lib/index.css";
+import "./CryptidMap.css"
 
 const CryptidMap = () => {
 

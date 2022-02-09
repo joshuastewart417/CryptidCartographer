@@ -8,7 +8,7 @@ namespace CryptidCartographer.Repositories
         void Add(Cryptid cryptid);
         void Update(Cryptid cryptid);
         void Delete(int id);
-        bool IsCryptidTrackedByUser(int currentUserId, int cryptidId);
+        bool IsCryptidTrackedByUser(int userId, int cryptidId);
         List<Cryptid> GetAll();
         List<Cryptid> GetAllUserTrackedCryptids(int userId);
         List<Cryptid> GetCryptidByStateName(string name);

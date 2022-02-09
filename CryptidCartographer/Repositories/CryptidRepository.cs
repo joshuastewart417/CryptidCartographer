@@ -142,7 +142,8 @@ namespace CryptidCartographer.Repositories
                         FROM Cryptid c
                                LEFT JOIN [User] u on c.UserId = u.id
                                LEFT JOIN State s on c.StateId = s.id
-                        WHERE DateCreated < SYSDATETIME() AND UserId = @id";
+                        WHERE DateCreated < SYSDATETIME() AND UserId = @id
+                        ORDER BY DateCreated DESC";
 
                     var cryptids = new List<Cryptid>();
 
@@ -297,7 +298,7 @@ namespace CryptidCartographer.Repositories
             }
         }
 
-        public bool IsCryptidTrackedByUser(int currentUserId, int cryptidId)
+        public bool IsCryptidTrackedByUser(int userId, int cryptidId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -309,7 +310,7 @@ namespace CryptidCartographer.Repositories
                         SELECT * FROM Track
                         WHERE UserId = @currentUserId AND CryptidId = @cryptidId";
 
-                    cmd.Parameters.AddWithValue("@currentUserId", currentUserId);
+                    cmd.Parameters.AddWithValue("@userId", userId);
                     cmd.Parameters.AddWithValue("@cryptidId", cryptidId);
 
                     cmd.ExecuteNonQuery();

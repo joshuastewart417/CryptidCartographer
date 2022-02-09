@@ -17,10 +17,10 @@ export const getUserById = (id) => {
     return fetch(userUrl + `/GetUserById/${id}`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
-        },
-    }).then((res) => res.json());
-}
+            "Content-type": "application/json"
+        }
+    }).then((res) => res.json())
+};
 
 export const addUser = (user) => {
     return fetch(userUrl, {

@@ -8,7 +8,6 @@ import { getAllStates } from "../../modules/stateManager";
 const AddCryptid = () => {
    
     const [stateList, setStateList] = useState([]);
-    const [currentUserId, setCurrentUserId] = useState([]);
     
     const history = useHistory();
 
@@ -20,13 +19,6 @@ const AddCryptid = () => {
         stateId: "",
     });
 
-    const getLoggedInUser = () => {
-        getUserById(currentUserId).then((res) => {
-            const newCryptid = { ...cryptid };
-            newCryptid["userId"] = res;
-            setCryptid(newCryptid);
-        });
-    };
 
     const getStateList = () => {
         getAllStates().then((res) => setStateList(res))
@@ -42,17 +34,12 @@ const AddCryptid = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        addCryptid(cryptid).then(() => history.push(`/userCryptidList`));
+        addCryptid(cryptid).then(() => history.push(`/myCryptidList`));
     };
 
     useEffect(() => {
         getStateList();
-        setCurrentUserId(localStorage.getItem("LoggedInUserId"));
     }, []);
-
-    useEffect(() => {
-        getLoggedInUser();
-    }, [currentUserId]);
 
     return (
         <form className="main-content">
@@ -121,7 +108,7 @@ const AddCryptid = () => {
             </button>
             <button
                 className="btn-add-cancel"
-                onClick={() => history.push(`/userCryptidList`)}
+                onClick={() => history.push(`/myCryptidList`)}
             >
                 Cancel
             </button>

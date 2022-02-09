@@ -22,7 +22,7 @@ namespace CryptidCartographer.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Track (UserId, CryptidId);
+                        INSERT INTO Track (UserId, CryptidId)
                         OUTPUT INSERTED.ID
                         VALUES (@userId, @cryptidId)";
 
@@ -60,15 +60,19 @@ namespace CryptidCartographer.Repositories
             }
         }
 
-        public void Delete(int id)
+        public void Delete(Track track)
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Track WHERE id = @id";
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandText = @"
+                                        DELETE FROM Track 
+                                        WHERE UserId = @userId
+                                        AND CryptidId = @cryptidId";
+                    cmd.Parameters.AddWithValue("@userId", track.UserId);
+                    cmd.Parameters.AddWithValue("@cryptidId", track.CryptidId);
 
                     cmd.ExecuteNonQuery();
                 }

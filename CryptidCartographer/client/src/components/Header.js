@@ -23,12 +23,12 @@ export default function Header({ isLoggedIn, isAdmin }) {
         <div>
             <Navbar color="light" light expand="md">
                 <NavbarBrand tag={RRNavLink} to="/">
+                    <img className="CC_Logo" src="/CC_Logo.png" height="100px" width="auto"/>
                     Cryptid Cartographer
                 </NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
-                        {/* When isLoggedIn === true, we will render the Home link */}
                         {isLoggedIn && (
                             <>
 
@@ -45,7 +45,7 @@ export default function Header({ isLoggedIn, isAdmin }) {
                                 </NavItem> : null}
 
                                 {isLoggedIn ? <NavItem>
-                                    <NavLink tag={RRNavLink} to="/trackingList">
+                                    <NavLink tag={RRNavLink} to="/trackedCryptidList">
                                         Tracking List
                                     </NavLink>
                                 </NavItem> : null}
