@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import { Card, CardBody, CardImg, Button, Input } from "reactstrap";
+import { Card, CardBody, Button, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { addTrack, deleteTrack } from "../../modules/trackManager"
-import {getIsCryptidTrackedByUser} from "../../modules/cryptidManager"
+// import {getIsCryptidTrackedByUser} from "../../modules/cryptidManager"
+import "./Cryptid.css"
 
 let userid = parseInt(localStorage.getItem("LoggedInUserId"))
 
@@ -50,16 +51,16 @@ const Cryptid = ({ cryptid }) => {
 
 
     return (
-      <Card className="cryptid">
+      <Card className="cryptid_card">
             <Link
                 to={`/cryptid/${cryptid.id}`}
                 style={{ textDecoration: "none", color: "black" }}
             >
                 <CardBody>
-                  <CardImg src={cryptid?.imageUrl} />
-                    <p>
-                        <strong>{cryptid.name}</strong>
-                    </p>
+                  <img className="cryptid_img" src={cryptid?.imageUrl} />
+                    
+                    <h2>{cryptid.name}</h2>
+                   
                     <p>Seen: {cryptid?.dateCreated?.split("T"[0]).shift()}</p>
                 </CardBody>
             </Link>

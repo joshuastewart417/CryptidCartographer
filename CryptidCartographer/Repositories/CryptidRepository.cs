@@ -142,7 +142,8 @@ namespace CryptidCartographer.Repositories
                         FROM Cryptid c
                                LEFT JOIN [User] u on c.UserId = u.id
                                LEFT JOIN State s on c.StateId = s.id
-                        WHERE DateCreated < SYSDATETIME() AND UserId = @id";
+                        WHERE DateCreated < SYSDATETIME() AND UserId = @id
+                        ORDER BY DateCreated DESC";
 
                     var cryptids = new List<Cryptid>();
 
