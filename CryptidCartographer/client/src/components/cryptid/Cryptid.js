@@ -1,17 +1,13 @@
-import React, {useEffect, useState} from "react";
-import { Card, CardBody, Button, Input } from "reactstrap";
+import React from "react";
+import { Card, CardBody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { addTrack, deleteTrack } from "../../modules/trackManager"
-// import {getIsCryptidTrackedByUser} from "../../modules/cryptidManager"
 import "./Cryptid.css"
 
 let userid = parseInt(localStorage.getItem("LoggedInUserId"))
 
 
 const Cryptid = ({ cryptid }) => {
-
-    const [isChecked, setIsChecked] = useState(false);
 
 
     const history = useHistory();
@@ -24,30 +20,10 @@ const Cryptid = ({ cryptid }) => {
         history.push(`/editCryptid/${cryptid.id}`);
     };
 
-    const handleIsChecked = () => {
-        const newTrack = {
-            userId: userid,
-            cryptidId: cryptid.id
-        }
-
-        if (isChecked === false){  
-           addTrack(newTrack)
-           setIsChecked(true)
-        } else {
-            deleteTrack(newTrack)
-            setIsChecked(false)
-        }
+    const handleTrack = () => {
+        
+        history.push(`/addTrackCryptid/${cryptid.id}`);
     }
-
-    // const isTracked = () => {
-    //     const existingTrack = {
-    //         userId: userid,
-    //         cryptidId: cryptid.id
-    //     }
-
-    //     getIsCryptidTrackedByUser(existingTrack)
-    //     .then(res => setIsChecked(res))    
-    // }
 
 
     return (
@@ -55,31 +31,39 @@ const Cryptid = ({ cryptid }) => {
             <Link
                 to={`/cryptid/${cryptid.id}`}
                 style={{ textDecoration: "none", color: "black" }}
-            >
-                <CardBody>
+            >          
+                <CardBody className="cryptid_cardbody">
                   <img className="cryptid_img" src={cryptid?.imageUrl} />
                     
-                    <h2>{cryptid.name}</h2>
+                    <h4>{cryptid.name}</h4>
                    
                     <p>Seen: {cryptid?.dateCreated?.split("T"[0]).shift()}</p>
                 </CardBody>
-            </Link>
-            {userid == cryptid.userId ? (
-                <Button color="danger" onClick={handleDelete}>
-                    Delete
+            </Link>   
+            <div className="edit_deletebtn">    
+                {userid === cryptid.userId ? (
+                    <Button className="edit_btn" color="secondary" onClick={handleEdit}>
+                        Edit
+                    </Button>
+                ) : (
+                    <></>
+                )}
+                {userid === cryptid.userId ? (
+                    <Button className="delete_btn" color="danger" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                ) : (
+                    <></>
+                )}
+            </div> 
+            {userid !== cryptid.userId ? (
+                <Button color="warning" onClick={handleTrack}>
+                    Track
                 </Button>
             ) : (
                 <></>
             )}
-            {userid == cryptid.userId ? (
-                <Button color="primary" onClick={handleEdit}>
-                    Edit
-                </Button>
-            ) : (
-                <></>
-            )}
-            <Input type="checkbox" onChange={handleIsChecked} defaultChecked={setIsChecked}/>   
-            <strong>Track This Cryptid</strong>   
+                   
         </Card>
     );
 };

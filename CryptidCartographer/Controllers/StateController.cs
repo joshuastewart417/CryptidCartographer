@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using CryptidCartographer.Repositories;
 using CryptidCartographer.Models;
 
 namespace CryptidCartographer.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StateController : ControllerBase

@@ -1,0 +1,81 @@
+h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight:400;
+    color:red;
+    text-align: center;
+}
+
+h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight:500;
+}
+
+.trackedcryptid_card {
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    margin-bottom:5px;
+}
+
+.trackedcryptid_cardbody {
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom:10px;
+}
+
+.trackedcryptid_img {
+    width:150px;
+    height:auto;
+}
+
+
+.trackedname_date_statestack {
+    width:300px;
+    display:flex;
+    flex-direction: column;
+}
+
+.trackeddate_seen {
+    display:flex;
+    flex-direction: row;
+}
+
+.dateseen {
+    margin-left:5px;
+}
+
+.trackedstate_name {
+    display:flex;
+    flex-direction: row;
+}
+
+.stateseen {
+    margin-left:5px;
+}
+
+.addtrack_card {
+    color:white;
+    width:100%;
+    text-align: center;
+}
+
+.removetrack_card {
+    color:white;
+    width:100%;
+    text-align: center;
+}
+
+.removetracked_btn {
+    width:250px;
+    margin-bottom:10px;
+}
+
+.mytrackinglist_container {
+    height:650px;
+}
+
+.notracked_message {
+    margin-top:80px;
+}

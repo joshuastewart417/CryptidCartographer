@@ -11,6 +11,7 @@ import {
     NavLink,
 } from "reactstrap";
 import { logout } from "../modules/authManager";
+import "../components/cryptid/Cryptid.css"
 
 export default function Header({ isLoggedIn, isAdmin }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,10 +21,15 @@ export default function Header({ isLoggedIn, isAdmin }) {
 
 
     return (
-        <div>
-            <Navbar color="light" light expand="md">
+        <div className="nav_container">
+            <Navbar className="navbar-static-top"
+            position="sticky"
+            color="light"
+                container="xl"
+                expand="xl"
+                light>
                 <NavbarBrand tag={RRNavLink} to="/">
-                    <img className="CC_Logo" src="/CC_Logo.png" height="100px" width="auto"/>
+                    <img className="CC_Logo" src="/CC_Logo.png" height="80px" width="auto"/>
                     Cryptid Cartographer
                 </NavbarBrand>
                 <NavbarToggler onClick={toggle} />
@@ -40,13 +46,13 @@ export default function Header({ isLoggedIn, isAdmin }) {
 
                                 {isLoggedIn ? <NavItem>
                                     <NavLink tag={RRNavLink} to="/myCryptidList">
-                                        Sightings
+                                        My Sightings
                                     </NavLink>
                                 </NavItem> : null}
 
                                 {isLoggedIn ? <NavItem>
                                     <NavLink tag={RRNavLink} to="/trackedCryptidList">
-                                        Tracking List
+                                        Cryptid Tracker
                                     </NavLink>
                                 </NavItem> : null}
                             </>

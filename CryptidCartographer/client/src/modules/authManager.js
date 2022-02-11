@@ -20,6 +20,7 @@ const _doesUserExist = (firebaseUserId) => {
 };
 
 const _saveUser = (user) => {
+  console.log(user)
   return getToken().then((token) =>
     fetch(_apiUrl, {
       method: "POST",
@@ -33,7 +34,8 @@ const _saveUser = (user) => {
 
 
 
-export const getToken = () => firebase.auth().currentUser.getIdToken();
+export const getToken = () =>
+firebase.auth().currentUser.getIdToken();
 
 
 export const login = (email, pw) => {
@@ -56,6 +58,7 @@ export const login = (email, pw) => {
 
 export const logout = () => {
   firebase.auth().signOut()
+  localStorage.clear();
 };
 
 

@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { addCryptid } from "../../modules/cryptidManager";
 import { getUserById } from "../../modules/userManager";
 import { getAllStates } from "../../modules/stateManager";
+import "../cryptid/Cryptid.css"
 
 
 const AddCryptid = () => {
@@ -42,7 +43,7 @@ const AddCryptid = () => {
     }, []);
 
     return (
-        <form className="main-content">
+        <form className="addcryptidsighting_container">
             <h2 className="_cryptidName">Add Sighting</h2>
             <fieldset className="fieldset">
                 <div className="form-group">
@@ -85,7 +86,7 @@ const AddCryptid = () => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="state">State Sighted</label>
+                    <label htmlFor="state">State Sighted:</label>
                     <select
                         value={cryptid.stateId}
                         name="stateId"
