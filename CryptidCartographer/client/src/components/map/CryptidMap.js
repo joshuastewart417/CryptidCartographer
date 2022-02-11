@@ -12,7 +12,10 @@ const CryptidMap = () => {
 
 
 return <>
-        <SVGMap map={usa} onLocationClick={event => history.push(`/stateCryptidList/${event.target.ariaLabel}`)}/>    
+        <div className="map_container">
+                <h3> Choose a location below to view cryptid sightings</h3>
+                <SVGMap map={usa} onLocationClick={event => history.push(`/stateCryptidList/${event.target.ariaLabel}`)}/>   
+        </div> 
        </>
 
 }

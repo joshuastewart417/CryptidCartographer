@@ -3,6 +3,7 @@ import { Card, CardBody, Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { deleteCryptid } from "../../modules/cryptidManager";
 import { useParams } from "react-router-dom";
+import "../cryptid/Cryptid.css"
 
 
 const DeleteCryptid = () => {
@@ -19,12 +20,12 @@ const DeleteCryptid = () => {
         history.push("/myCryptidList")
     }
     return (
-        <Card>
+        <Card color="secondary" className="removecryptid_card">
             <CardBody>
                 <p>Are you sure you want to delete this sighting? </p>
                 <br></br>
-                <Button onClick={handleCancel}>Cancel</Button>
-                <Button onClick={handleDelete}>Delete</Button>
+                <Button color="light" onClick={handleCancel}>Cancel</Button>
+                <Button color="danger" onClick={handleDelete}>Delete</Button>
             </CardBody>
         </Card >
     );

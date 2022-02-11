@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {useHistory, useParams} from "react-router-dom";
 import { getCryptidById, updateCryptid } from "../../modules/cryptidManager";
 import { getAllStates } from "../../modules/stateManager";
+import "./Cryptid.css"
 
 
 const EditCryptid = () => {
@@ -26,7 +27,6 @@ const EditCryptid = () => {
     useEffect(() => {
         getStateList();
         getCryptidById(id).then(res => setCryptid(res))
-        console.log(id)
     }, []);
 
     const handleControlledInputChange = (event) => {
@@ -44,8 +44,8 @@ const EditCryptid = () => {
 
         return(
         
-        <form className="main-content">
-            <h2 className="_cryptidName">Add Sighting</h2>
+        <form className="editcryptidsighting_container">
+            <h2 className="_cryptidName">Edit Sighting</h2>
                 <fieldset className="fieldset">
                     <div className="form-group">
                         <label htmlFor="name">Cryptid Name:</label>
@@ -87,7 +87,7 @@ const EditCryptid = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="state">State Sighted</label>
+                        <label htmlFor="state">State Sighted:</label>
                         <select
                             value={cryptid.stateId}
                             name="stateId"

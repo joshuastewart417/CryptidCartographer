@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using CryptidCartographer.Models;
 using CryptidCartographer.Repositories;
 
 namespace CryptidCartographer.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
 
-    //TODO: AUTH USAGE
+ 
     public class CryptidController : ControllerBase
     {
         private readonly ICryptidRepository _cryptidRepo;

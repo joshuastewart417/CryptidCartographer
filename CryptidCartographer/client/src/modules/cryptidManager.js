@@ -16,85 +16,103 @@ export const getAllCryptids = () => {
   };
 
 export const addCryptid = (cryptid) => {
-    return fetch(cryptidUrl, {
+    return getToken().then((token) =>
+    fetch(cryptidUrl, {
         method:"POST",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json",
         },
         body: JSON.stringify(cryptid)
-    });
+    }));
 };
 
 export const deleteCryptid = (cryptid) => {
-    return fetch(cryptidUrl + `/${cryptid}`, {
+    return getToken().then((token) =>
+    fetch(cryptidUrl + `/${cryptid}`, {
         method: "DELETE",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         },
-    });
+    }));
 };
 
 export const updateCryptid = (cryptid) => {
-    return fetch(cryptidUrl, {
+    return getToken().then((token) =>
+    fetch(cryptidUrl, {
         method: "PUT",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         },
         body: JSON.stringify(cryptid)
-    });
+    }));
 };
 
 export const getCryptidById = (cryptidId) => {
-    return fetch(cryptidUrl + `/${cryptidId}`, {
+    return getToken().then((token) =>
+    fetch(cryptidUrl + `/${cryptidId}`, {
         method: "GET",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => res.json()));
 };
 
 export const getCryptidByStateName = (stateName) => {
-    return fetch(cryptidUrl + `/GetCryptidByStateName/${stateName}`, {
+    return getToken().then((token) =>
+    fetch(cryptidUrl + `/GetCryptidByStateName/${stateName}`, {
         method: "GET",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => res.json()));
 };
 
 export const getCryptidByClassification = (classId) => {
-    return fetch(cryptidUrl + `/GetCryptidByClassification/${classId}`, {
+    return getToken().then((token) =>
+    fetch(cryptidUrl + `/GetCryptidByClassification/${classId}`, {
         method: "GET",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => res.json()));
 };
 
 export const getCryptidSightingByUserId = (userId) => {
-    return fetch(cryptidUrl + `/GetCryptidSightingByUserId/${userId}`, {
+    return getToken().then((token) =>
+    fetch(cryptidUrl + `/GetCryptidSightingByUserId/${userId}`, {
         method: "GET",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => res.json()));
 };
 
 export const getAllUserTrackedCryptids = (trackId) => {
-    return fetch(cryptidUrl + `/GetAllUserTrackedCryptids/${trackId}`, {
+    return getToken().then((token) =>
+    fetch(cryptidUrl + `/GetAllUserTrackedCryptids/${trackId}`, {
         method: "GET",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => res.json()));
 };
 
 export const getIsCryptidTrackedByUser = (userId, cryptidId) => {
-    return fetch(
+    return getToken().then((token) =>
+    fetch(
         `${cryptidUrl}/getIsCryptidTrackedByUser/?UserId=${userId}&CryptidId=${cryptidId}`,
         {
             method: "GET",
             headers: {
+                Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
         }
@@ -102,6 +120,6 @@ export const getIsCryptidTrackedByUser = (userId, cryptidId) => {
         if (res.json().length > 0) {
             return true;
         } else return false;
-    });
+    }));
 };
 

@@ -24,16 +24,20 @@ const MyCryptidList = () => {
 
     return (
         <>
-            <h2>My Sightings</h2>
+            <div className="mysighting_container">
+                <h1>My Sightings</h1>
 
-            <div className="container">
-            <Button color="success" onClick={() => history.push("/addCryptid")}> Add Sighting</Button>
-                <div className="row justify-content-center">
-                    {cryptids.length > 0 ? cryptids.map((cryptid) => (
-                        <Cryptid cryptid={cryptid} key={cryptid.id} />
-                    )) : <h1>No cryptid sightings added</h1>}
+                <div className="mycryptidlist_container">
+                <Button className="addsighting_btn" color="success" onClick={() => history.push("/addCryptid")}> Add Sighting</Button>
+                    <div className="mycryptidcard_container">
+                        {cryptids.length > 0 ? cryptids.map((cryptid) => (
+                            <Cryptid cryptid={cryptid} key={cryptid.id} />
+                        )) : 
+                                <h3>No cryptid sightings added</h3>}
+                    </div>
                 </div>
             </div>
+
         </>
     );
 };

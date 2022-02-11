@@ -1,16 +1,27 @@
+import { getToken } from "./authManager";
+
 const stateUrl = "/api/state";
 
 export const getAllStates = () => {
-    return fetch(stateUrl).then((res) => res.json());
+    return  getToken().then((token) =>
+    fetch(stateUrl, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json"
+        }
+    }).then((res) => res.json()));
 };
 
 export const getStateById = (stateId) => {
-    return fetch(stateUrl + `/${stateId}`, {
+    return getToken().then((token) =>
+    fetch(stateUrl + `/${stateId}`, {
         method: "GET",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => res.json()));
 };
 
 

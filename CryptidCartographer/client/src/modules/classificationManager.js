@@ -5,39 +5,47 @@ export const getAllClassifications = () => {
 };
 
 export const createClassification = (classification) => {
-    return fetch(classUrl, {
+    return getToken().then((token) =>
+    fetch(classUrl, {
         method:"POST",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json",
         },
         body: JSON.stringify(classification)
-    });
+    }));
 };
 
 export const deleteClassification = (classification) => {
-    return fetch(classUrl + `/${classification.id}`, {
+    return getToken().then((token) =>
+    fetch(classUrl + `/${classification.id}`, {
         method: "DELETE",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         }
-    });
+    }));
 };
 
 export const updateClassification = (classification) => {
-    return fetch(classUrl + `/${classification.id}`, {
+    return getToken().then((token) =>
+    fetch(classUrl + `/${classification.id}`, {
         method: "PUT",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         },
         body: JSON.stringify(classification)
-    })
-}
+    }));
+};
 
 export const getClassById = (classId) => {
-    return fetch(classUrl + `/${classId}`, {
+    return getToken().then((token) =>
+     fetch(classUrl + `/${classId}`, {
         method: "GET",
         headers: {
+            Authorization: `Bearer ${token}`,
             "Content-type": "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => res.json()));
 };

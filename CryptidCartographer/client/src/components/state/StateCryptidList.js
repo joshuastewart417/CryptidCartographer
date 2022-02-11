@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Cryptid from "./Cryptid";
+import Cryptid from "../cryptid/Cryptid";
 import { getCryptidByStateName } from "../../modules/cryptidManager";
 import { useParams } from "react-router-dom";
+import "../cryptid/Cryptid.css"
 
 
 const StateCryptidList = () => {
@@ -21,12 +22,12 @@ const StateCryptidList = () => {
     }, []);
 
     return (
-        <>
+        <div className="statelist_container">
             <h1> {stateName} Cryptid Sightings</h1>
-            <div>
+            <div className="statecard_container">
                 {cryptids.map((cryptid) => <Cryptid cryptid={cryptid} key={cryptid.id} />)}
             </div>
-        </>
+        </div>
     )
 }
 

@@ -1,11 +1,144 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,400&display=swap');
 
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight:500;
+    color:white;
+    text-align: center;
+}
+
 h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight:500;
 }
 
+h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight:400;
+    color:red;
+    text-align: center;
+}
+
+h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight:500;
+}
+
+html {
+    background-color: black;
+}
+
+main {
+    background-image: url("../../../public/bckg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display:flex;
+    justify-content: center;
+}
+
+.nav_container {
+    text-align: center;
+}
+
 .cryptid_img {
+    width:250px;
+    height:auto;
+    overflow:hidden;
+}
+
+.cryptid_card {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:350px;
+    height:500px;
+    margin-right:5px;
+    margin-bottom:10px;
+}
+
+.cryptid_cardbody {
+    text-align: center;
+}
+
+.edit_deletebtn {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.edit_btn {
+    margin-right:10px;
+}
+
+.statelist_container {
+    display:flex;
+    flex-direction:column;
+
+}
+
+.statecard_container {
+    height:500px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content: space-evenly;
+}
+
+.mycryptidlist_container {
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: space-between;
+    background-color:rgba(black, black, black, 0.5);
+}
+
+.mycryptidcard_container {
+    height:500px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content: space-evenly;
+}
+
+.addsighting_btn {
+    width:200px;
+    margin-bottom:60px;
+    margin-top:60px;
+}
+
+.addcryptidsighting_container {
+    color:white;
+    height:700px;
     width:600px;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+}
+
+.editcryptidsighting_container {
+    color:white;
+    height:700px;
+    width:600px;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+}
+
+.removecryptid_card {
+    color:white;
+    width:100%;
+    text-align: center;
+}
+
+.cryptiddetail_container {
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    width:700px;
+    margin-top:50px;
+}
+
+.cryptid_detailimg {
+    max-width:60%;
     height:auto;
 }
