@@ -1,5 +1,7 @@
 # Cryptid Cartographer
 
+![alt text](https://res.cloudinary.com/dcxvvavft/image/upload/v1647376184/CC1_nrojjx.png)
+
 ## Initial Setup 
 
 1. Open up your terminal and clone this repository
@@ -36,6 +38,10 @@ You can begin creating your Sightings List by navigating to the `My Sightings` l
 Once you have have created a new sighting you can see your sighting listed in 'My Sightings' as well as via the US Map to the appropriate state. You will also have the ability to Update, Delete, or view the Cryptid Sighting details.
 
 The logged in user can click 'Track' on other user sightings in order to save them to their 'Tracking List' which can be viewed via the navbar. The user then has the option to 'untrack' the cryptid sightings.
+
+![alt text](https://res.cloudinary.com/dcxvvavft/image/upload/v1647376275/Capture_eftbnl.png)
+
+![alt text](https://res.cloudinary.com/dcxvvavft/image/upload/v1647376308/CC2_zzkr0n.png)
 
 ## Documentation
 
